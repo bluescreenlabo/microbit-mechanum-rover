@@ -31,15 +31,16 @@ radio.onReceivedValue(function (name, value) {
     if (name == "mag") {
         magnitude = value * 255
     } else if (name == "ban") {
-        angle = value - 3.14 / 4
+        angle = 0 - value
+        angle = angle + 3.14 / 4
     } else if (name == "btn") {
+        buttonNum = value
         if (value == 4) {
             turnV = 100
         } else if (value == 2) {
             turnV = -100
         } else {
             turnV = 0
-            buttonNum = value
         }
     } else {
     	
@@ -49,18 +50,11 @@ let v4 = 0
 let v3 = 0
 let v2 = 0
 let v1 = 0
-let buttonNum = 0
 let turnV = 0
+let buttonNum = 0
 let angle = 0
 let magnitude = 0
 radio.setGroup(1)
-basic.showLeds(`
-    . . . . .
-    # # . # #
-    # # . # #
-    # # . # #
-    . . . . .
-    `)
 basic.forever(function () {
     v1 = magnitude * Math.cos(angle)
     v2 = magnitude * Math.sin(angle)
@@ -87,6 +81,22 @@ loops.everyInterval(100, function () {
             # # . # #
             # # . # #
             # # . # #
+            `)
+    } else if (buttonNum == 2) {
+        basic.showLeds(`
+            . . . . .
+            # . # # .
+            # . # # .
+            # . # # .
+            . . . . .
+            `)
+    } else if (buttonNum == 4) {
+        basic.showLeds(`
+            . . . . .
+            . # # . #
+            . # # . #
+            . # # . #
+            . . . . .
             `)
     } else {
         basic.showLeds(`
